@@ -46,6 +46,20 @@ export const LOAD_DETAILS = gql`
       id
       type
       marque
+      materiels {
+        id
+        serie
+        detail {
+          id
+          type
+          marque
+        }
+        user {
+          id
+          nom
+          prenom
+        }
+      }
     }
   }
 `;

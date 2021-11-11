@@ -39,6 +39,11 @@ function Form() {
         serie: value.serie,
         detailId: value.detailId,
       },
+      refetchQueries: [
+        {
+          query: LOAD_DETAILS,
+        },
+      ],
     });
     helpers.resetForm();
   };

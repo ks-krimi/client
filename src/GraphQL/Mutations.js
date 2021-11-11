@@ -144,3 +144,55 @@ export const RENDRE_OCCUPER_MATERIEL = gql`
     }
   }
 `;
+
+export const ADD_DETAIL = gql`
+  mutation addDetail($type: String, $marque: String) {
+    addDetail(type: $type, marque: $marque) {
+      id
+      type
+      marque
+      materiels {
+        id
+        serie
+        detail {
+          id
+          type
+          marque
+        }
+        user {
+          id
+          nom
+          prenom
+        }
+      }
+    }
+  }
+`;
+
+export const DELETE_DETAIL = gql`
+  mutation deleteDetail($id: ID!) {
+    deleteDetail(detailId: $id) {
+      id
+      type
+      marque
+      materiels {
+        id
+        serie
+      }
+    }
+  }
+`;
+
+export const UPDATE_DETAIL = gql`
+  mutation updateDetail($id: ID!, $type: String, $marque: String) {
+    updateDetail(id: $id, type: $type, marque: $marque) {
+      id
+      type
+      marque
+      materiels {
+        id
+        serie
+      }
+    }
+  }
+`;
