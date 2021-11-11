@@ -4,9 +4,12 @@ import { MoreVert } from "@material-ui/icons";
 import { useMutation } from "@apollo/client";
 import { DELETE_USER } from "../../GraphQL/Mutations";
 import { LOAD_USERS } from "../../GraphQL/Queries";
+import Dialog from "../Dialog";
+import Form from "./Form";
 
 function PopOver({ user }) {
   const [anchorEl, setAnchorEl] = useState(null);
+  const [isOpen, setIsOpen] = useState(false);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -43,6 +46,11 @@ function PopOver({ user }) {
     });
   };
 
+  const OpenDialog = () => {
+    setIsOpen(true);
+    handleClose();
+  };
+
   return (
     <div style={{ position: "absolute", top: 4, right: 4 }}>
       <IconButton onClick={handleClick}>
@@ -57,7 +65,7 @@ function PopOver({ user }) {
           "aria-labelledby": "basic-button",
         }}
       >
-        <MenuItem onClick={handleClose}>Modifier</MenuItem>
+        <MenuItem onClick={OpenDialog}>Modifier</MenuItem>
         <MenuItem disabled={user.materiels[0]} onClick={handleDelete}>
           {loading ? "loading..." : "Supprimer"}
         </MenuItem>
@@ -65,6 +73,13 @@ function PopOver({ user }) {
           Voir les materiels
         </MenuItem>
       </Menu>
+
+      <Dialog isOpen={isOpen} setIsOpen={setIsOpen}>
+        <Form
+          initialFormState={{ id: user.id, nom: user.nom, prenom: user.prenom }}
+          setIsOpen={setIsOpen}
+        />
+      </Dialog>
     </div>
   );
 }
