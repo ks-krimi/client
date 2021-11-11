@@ -24,7 +24,7 @@ function Add() {
         Utilisateur
       </Fab>
       <Dialog isOpen={isOpen} setIsOpen={setIsOpen}>
-        <Form />
+        <Form setIsOpen={setIsOpen} />
       </Dialog>
     </>
   );

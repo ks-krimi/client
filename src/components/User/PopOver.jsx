@@ -6,10 +6,12 @@ import { DELETE_USER } from "../../GraphQL/Mutations";
 import { LOAD_USERS } from "../../GraphQL/Queries";
 import Dialog from "../Dialog";
 import Form from "./Form";
+import ListMateriel from "./ListMateriel";
 
 function PopOver({ user }) {
   const [anchorEl, setAnchorEl] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
+  const [isOpenListMateriel, setIsOpenListMateriel] = useState(false);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -51,6 +53,11 @@ function PopOver({ user }) {
     handleClose();
   };
 
+  const OpenDialogListeMateriel = () => {
+    setIsOpenListMateriel(true);
+    handleClose();
+  };
+
   return (
     <div style={{ position: "absolute", top: 4, right: 4 }}>
       <IconButton onClick={handleClick}>
@@ -69,16 +76,25 @@ function PopOver({ user }) {
         <MenuItem disabled={user.materiels[0]} onClick={handleDelete}>
           {loading ? "loading..." : "Supprimer"}
         </MenuItem>
-        <MenuItem disabled={!user.materiels[0]} onClick={handleClose}>
+        <MenuItem
+          disabled={!user.materiels[0]}
+          onClick={OpenDialogListeMateriel}
+        >
           Voir les materiels
         </MenuItem>
       </Menu>
 
+      {/* dialog pour le modification d'un utilisateur */}
       <Dialog isOpen={isOpen} setIsOpen={setIsOpen}>
         <Form
           initialFormState={{ id: user.id, nom: user.nom, prenom: user.prenom }}
           setIsOpen={setIsOpen}
         />
+      </Dialog>
+
+      {/* dialog pour les listes des materiel utiliser par un utilisateur */}
+      <Dialog isOpen={isOpenListMateriel} setIsOpen={setIsOpenListMateriel}>
+        <ListMateriel user={user} setIsOpen={setIsOpenListMateriel} />
       </Dialog>
     </div>
   );

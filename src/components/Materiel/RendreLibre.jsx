@@ -1,7 +1,8 @@
 import { IconButton } from "@material-ui/core";
-import { PersonAddDisabled } from "@material-ui/icons";
+import { PersonAddDisabled, Delete } from "@material-ui/icons";
 import { useMutation } from "@apollo/client";
 import { RENDRE_LIBRE_MATERIEL } from "../../GraphQL/Mutations";
+import React from "react";
 
 function RendreLibre(props) {
   const [updateMateriel, { loading, error }] = useMutation(
@@ -11,11 +12,12 @@ function RendreLibre(props) {
   if (error) return <p>Error occured</p>;
 
   return (
-    <>
+    <React.Fragment>
       {loading ? (
-        "loading..."
+        <span style={props.style}>loading...</span>
       ) : (
         <IconButton
+          style={props.style}
           onClick={() =>
             updateMateriel({
               variables: {
@@ -25,10 +27,10 @@ function RendreLibre(props) {
             })
           }
         >
-          <PersonAddDisabled />
+          {props.ilikedeleteicon ? <Delete /> : <PersonAddDisabled />}
         </IconButton>
       )}
-    </>
+    </React.Fragment>
   );
 }
 
