@@ -1,4 +1,4 @@
-import { Container, CssBaseline } from "@material-ui/core";
+import { Container } from "@material-ui/core";
 import Navigation from "../Navigation";
 
 function Layout({ children }) {
@@ -26,7 +26,6 @@ function Layout({ children }) {
           {children}
         </Container>
       </div>
-      <CssBaseline />
     </div>
   );
 }

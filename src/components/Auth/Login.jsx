@@ -45,7 +45,7 @@ export default function Login({ setSignIn, setSignUp }) {
     const { email, password } = values;
     axios({
       method: "POST",
-      url: "http://localhost:8000/api/user/login",
+      url: `${process.env.REACT_APP_API_URL}api/user/login`,
       data: { email, password },
       withCredentials: true,
     })
