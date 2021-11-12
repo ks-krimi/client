@@ -13,7 +13,7 @@ function PageNotFound() {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        width: "100vw",
+        position: "relative",
         height: "100vh",
       }}
     >

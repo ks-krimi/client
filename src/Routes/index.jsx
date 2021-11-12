@@ -5,21 +5,19 @@ import {
   Route,
   Redirect,
 } from "react-router-dom";
-import Layout from "../components/Layout";
-import { User, Detail, Materiel, PageNotFound } from "../Pages";
+import { User, Detail, Materiel, PageNotFound, Auth } from "../Pages";
 
 function Routes() {
   return (
     <Router>
-      <Layout>
-        <Switch>
-          <Route path="/" exact component={Materiel} />
-          <Route path="/detail" component={Detail} />
-          <Route path="/user" component={User} />
-          <Route path="/oops" component={PageNotFound} />
-          <Redirect to="/oops" />
-        </Switch>
-      </Layout>
+      <Switch>
+        <Route path="/" exact component={Materiel} />
+        <Route path="/detail" component={Detail} />
+        <Route path="/user" component={User} />
+        <Route path="/auth" component={Auth} />
+        <Route path="/oops" component={PageNotFound} />
+        <Redirect to="/oops" />
+      </Switch>
     </Router>
   );
 }

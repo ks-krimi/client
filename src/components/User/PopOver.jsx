@@ -73,7 +73,10 @@ function PopOver({ user }) {
         }}
       >
         <MenuItem onClick={OpenDialog}>Modifier</MenuItem>
-        <MenuItem disabled={user.materiels[0]} onClick={handleDelete}>
+        <MenuItem
+          disabled={user.materiels[0] || user.level === 1}
+          onClick={handleDelete}
+        >
           {loading ? "loading..." : "Supprimer"}
         </MenuItem>
         <MenuItem

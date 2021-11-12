@@ -3,36 +3,43 @@ import React from "react";
 import Add from "../../components/Detail/Add";
 import ListDetail from "../../components/Detail/ListDetail";
 import { LOAD_DETAILS } from "../../GraphQL/Queries";
+import useTitle from "../../hooks/useTitle";
+import useAuth from "../../hooks/useAuth";
+import Layout from "../../components/Layout";
 
 function Detail() {
+  useTitle("Type de materiel");
+  useAuth();
   const { error, loading, data } = useQuery(LOAD_DETAILS);
 
   return (
-    <div
-      style={{
-        paddingTop: 24,
-        position: "relative",
-        height: "inherit",
-      }}
-    >
+    <Layout>
       <div
         style={{
-          display: "flex",
-          gap: 8,
-          padding: "24px 0",
-          flexWrap: "wrap",
+          paddingTop: 24,
+          position: "relative",
+          height: "inherit",
         }}
       >
-        {loading ? (
-          <p>loading...</p>
-        ) : error ? (
-          <p>An error occured</p>
-        ) : (
-          <ListDetail details={data.details} />
-        )}
-        <Add />
+        <div
+          style={{
+            display: "flex",
+            gap: 8,
+            padding: "24px 0",
+            flexWrap: "wrap",
+          }}
+        >
+          {loading ? (
+            <p>loading...</p>
+          ) : error ? (
+            <p>An error occured</p>
+          ) : (
+            <ListDetail details={data.details} />
+          )}
+          <Add />
+        </div>
       </div>
-    </div>
+    </Layout>
   );
 }
 

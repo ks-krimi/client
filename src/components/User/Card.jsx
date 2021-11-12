@@ -12,6 +12,21 @@ function Card({ user }) {
         <Typography variant="caption" component="p">
           Nombre de materiel utiliser: {user.materiels?.length}
         </Typography>
+        {user.level === 1 && (
+          <span
+            style={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              margin: 4,
+              color: "rgba(255,0,0,0.7)",
+              fontSize: 11,
+              fontWeight: 600,
+            }}
+          >
+            Admin
+          </span>
+        )}
       </CardContent>
       <PopOver user={user} />
     </MCard>

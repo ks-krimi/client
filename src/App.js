@@ -6,7 +6,10 @@ import {
   from,
 } from "@apollo/client";
 import { onError } from "@apollo/client/link/error";
+import axios from "axios";
 import Routes from "./Routes";
+import userContext from "./hooks/UserContext";
+import { useEffect, useState } from "react";
 
 const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (graphQLErrors) {
@@ -27,9 +30,31 @@ const client = new ApolloClient({
 });
 
 function App() {
+  const [token, setToken] = useState(null);
+
+  useEffect(() => {
+    const getToken = async () => {
+      await axios({
+        method: "GET",
+        url: "http://localhost:8000/jwtid",
+        withCredentials: true,
+      })
+        .then((res) => {
+          setToken(res.data);
+        })
+        .catch((err) => {
+          console.log("no token");
+          setToken(null);
+        });
+    };
+    getToken();
+  }, [token]);
+
   return (
     <ApolloProvider client={client}>
-      <Routes />
+      <userContext.Provider value={token}>
+        <Routes />
+      </userContext.Provider>
     </ApolloProvider>
   );
 }
