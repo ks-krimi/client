@@ -6,6 +6,7 @@ export const LOAD_USERS = gql`
       id
       nom
       prenom
+      fonction
       email
       password
       level

@@ -4,6 +4,7 @@ import * as Yup from "yup";
 export const INITIAL_FORM_STATE = {
   nom: "",
   prenom: "",
+  fonction: "",
   email: "",
   password: "",
 };
@@ -14,6 +15,7 @@ export const FORM_VALIDATION = Yup.object().shape({
   prenom: Yup.string()
     .min(3, "Trois (03) caractères minimum")
     .required("Le prenom est vide"),
+  fonction: Yup.string().required("La fonction est vide"),
   /*   email: Yup.string()
     .required("L'email est vide")
     .email("Ce n'est pas un email"),

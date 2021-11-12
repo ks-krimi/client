@@ -5,6 +5,7 @@ import { ADD_USER, UPDATE_USER } from "../../GraphQL/Mutations";
 import { LOAD_USERS } from "../../GraphQL/Queries";
 import Button from "../controlles/Button";
 import TextField from "../controlles/TextField";
+import Select from "../controlles/Select";
 import { INITIAL_FORM_STATE, FORM_VALIDATION } from "./Validation";
 
 function Form({ initialFormState, setIsOpen }) {
@@ -32,6 +33,7 @@ function Form({ initialFormState, setIsOpen }) {
           id: initialFormState.id,
           nom: value.nom,
           prenom: value.prenom,
+          fonction: value.fonction,
         },
         refetchQueries: [{ query: LOAD_USERS }],
       });
@@ -44,6 +46,7 @@ function Form({ initialFormState, setIsOpen }) {
         variables: {
           nom: value.nom,
           prenom: value.prenom,
+          fonction: value.fonction,
           /* email: value.email,
           password: value.password, */
         },
@@ -83,10 +86,23 @@ function Form({ initialFormState, setIsOpen }) {
             <Grid item xs={12} sm={6}>
               <TextField required label="prenom" name="prenom" />
             </Grid>
-            {/* <Grid item xs={12} sm={12}>
-              <TextField required label="email" name="email" />
+            <Grid item xs={12} sm={12}>
+              <Select
+                required
+                label="fonction"
+                name="fonction"
+                options={[
+                  { id: "Chef secteur", value: "Chef secteur" },
+                  { id: "Commercial", value: "Commercial" },
+                  { id: "Monteur", value: "Monteur" },
+                  { id: "Agent de conduit", value: "Agent de conduit" },
+                  { id: "Chef d'usine", value: "Chef d'usine" },
+                  { id: "Releveur", value: "Releveur" },
+                  { id: "Comptable", value: "Comptable" },
+                ]}
+              />
             </Grid>
-            <Grid item xs={12}>
+            {/* <Grid item xs={12}>
               <TextField
                 required
                 name="password"

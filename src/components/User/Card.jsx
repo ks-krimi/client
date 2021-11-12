@@ -9,6 +9,9 @@ function Card({ user }) {
         <Typography variant="subtitle2" component="p">
           {user.prenom}
         </Typography>
+        <Typography color="secondary" variant="subtitle2" component="p">
+          {user.fonction}
+        </Typography>
         <Typography variant="caption" component="p">
           Nombre de materiel utiliser: {user.materiels?.length}
         </Typography>

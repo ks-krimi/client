@@ -90,7 +90,12 @@ function PopOver({ user }) {
       {/* dialog pour le modification d'un utilisateur */}
       <Dialog isOpen={isOpen} setIsOpen={setIsOpen}>
         <Form
-          initialFormState={{ id: user.id, nom: user.nom, prenom: user.prenom }}
+          initialFormState={{
+            id: user.id,
+            nom: user.nom,
+            fonction: user.fonction,
+            prenom: user.prenom,
+          }}
           setIsOpen={setIsOpen}
         />
       </Dialog>

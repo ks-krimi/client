@@ -4,6 +4,7 @@ export const ADD_USER = gql`
   mutation addUser(
     $nom: String!
     $prenom: String!
+    $fonction: String!
     $email: String
     $password: String
     $level: Int
@@ -11,6 +12,7 @@ export const ADD_USER = gql`
     addUser(
       nom: $nom
       prenom: $prenom
+      fonction: $fonction
       email: $email
       password: $password
       level: $level
@@ -18,6 +20,7 @@ export const ADD_USER = gql`
       id
       nom
       prenom
+      fonction
       email
       password
       level
@@ -39,6 +42,7 @@ export const UPDATE_USER = gql`
     $id: ID!
     $nom: String
     $prenom: String
+    $fonction: String!
     $email: String
     $password: String
     $level: Int
@@ -47,6 +51,7 @@ export const UPDATE_USER = gql`
       id: $id
       nom: $nom
       prenom: $prenom
+      fonction: $fonction
       email: $email
       password: $password
       level: $level
@@ -54,6 +59,7 @@ export const UPDATE_USER = gql`
       id
       nom
       prenom
+      fonction
       email
       password
       level
@@ -89,6 +95,7 @@ export const ADD_MATERIEL = gql`
         id
         nom
         prenom
+        fonction
       }
     }
   }
@@ -106,6 +113,7 @@ export const DELETE_MATERIEL = gql`
       user {
         nom
         prenom
+        fonction
       }
     }
   }
@@ -123,6 +131,7 @@ export const RENDRE_LIBRE_MATERIEL = gql`
       user {
         nom
         prenom
+        fonction
       }
     }
   }
@@ -140,6 +149,7 @@ export const RENDRE_OCCUPER_MATERIEL = gql`
       user {
         nom
         prenom
+        fonction
       }
     }
   }
@@ -163,6 +173,7 @@ export const ADD_DETAIL = gql`
           id
           nom
           prenom
+          fonction
         }
       }
     }
