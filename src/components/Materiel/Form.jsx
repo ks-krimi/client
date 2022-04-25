@@ -1,57 +1,56 @@
-import React from "react";
-import { Form as FForm, Formik } from "formik";
-import { Typography, Grid } from "@material-ui/core";
-import Button from "../controlles/Button";
-import TextField from "../controlles/TextField";
-import Select from "../controlles/Select";
-import { INITIAL_FORM_STATE, FORM_VALIDATION } from "./Validation";
-import { createOptionsDetailMateriel } from "../../utils";
-import { LOAD_DETAILS, LOAD_MATERIELS } from "../../GraphQL/Queries";
-import { ADD_MATERIEL } from "../../GraphQL/Mutations";
-import { useQuery, useMutation } from "@apollo/client";
+import React from 'react'
+import { Form as FForm, Formik } from 'formik'
+import { Typography, Grid } from '@material-ui/core'
+import Button from '../controlles/Button'
+import TextField from '../controlles/TextField'
+import Select from '../controlles/Select'
+import { INITIAL_FORM_STATE, FORM_VALIDATION } from './Validation'
+import { createOptionsDetailMateriel } from '../../utils'
+import { LOAD_DETAILS, LOAD_MATERIELS } from '../../GraphQL/Queries'
+import { ADD_MATERIEL } from '../../GraphQL/Mutations'
+import { useQuery, useMutation } from '@apollo/client'
 
 function Form() {
-  const { loading, data } = useQuery(LOAD_DETAILS);
+  const { loading, data } = useQuery(LOAD_DETAILS)
 
   const [addMateriel, { loading: loadingMateriel, error }] = useMutation(
     ADD_MATERIEL,
     {
       update(cache, { data }) {
         // add a new user to the existing array
-        const newMaterielFromResponse = data?.addMateriel;
-        const existingMateriel = cache.readQuery({ query: LOAD_MATERIELS });
+        const newMaterielFromResponse = data?.addMateriel
+        const existingMateriel = cache.readQuery({ query: LOAD_MATERIELS })
         cache.writeQuery({
           query: LOAD_MATERIELS,
           data: {
-            materiels: [
-              ...existingMateriel?.materiels,
-              newMaterielFromResponse,
-            ],
-          },
-        });
-      },
+            materiels: [...existingMateriel?.materiels, newMaterielFromResponse]
+          }
+        })
+      }
     }
-  );
+  )
 
   const handleSubmit = (value, helpers) => {
     addMateriel({
       variables: {
-        serie: value.serie,
-        detailId: value.detailId,
+        addMaterielFields: {
+          serie: value.serie,
+          detailId: value.detailId
+        }
       },
       refetchQueries: [
         {
-          query: LOAD_DETAILS,
-        },
-      ],
-    });
-    helpers.resetForm();
-  };
+          query: LOAD_DETAILS
+        }
+      ]
+    })
+    helpers.resetForm()
+  }
 
-  const optionsMateriel = createOptionsDetailMateriel(data?.details);
+  const optionsMateriel = createOptionsDetailMateriel(data?.details)
 
-  if (loadingMateriel) return <p>loading...</p>;
-  if (error) return <p>An error occured</p>;
+  if (loadingMateriel) return <p>loading...</p>
+  if (error) return <p>An error occured</p>
 
   return (
     <>
@@ -73,7 +72,7 @@ function Form() {
                 name="detailId"
                 options={
                   loading
-                    ? [{ id: null, value: "loading..." }]
+                    ? [{ id: null, value: 'loading...' }]
                     : optionsMateriel
                 }
               />
@@ -85,7 +84,7 @@ function Form() {
         </FForm>
       </Formik>
     </>
-  );
+  )
 }
 
-export default Form;
+export default Form

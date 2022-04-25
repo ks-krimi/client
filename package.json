@@ -35,9 +35,9 @@
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
+    "ignorePatterns": [
+      "src/*",
+      "!src/test.js"
     ]
   },
   "browserslist": {

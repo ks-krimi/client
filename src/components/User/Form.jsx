@@ -1,65 +1,67 @@
-import { Form as FForm, Formik } from "formik";
-import { Typography, Grid, Divider } from "@material-ui/core";
-import { useMutation } from "@apollo/client";
-import { ADD_USER, UPDATE_USER } from "../../GraphQL/Mutations";
-import { LOAD_USERS } from "../../GraphQL/Queries";
-import Button from "../controlles/Button";
-import TextField from "../controlles/TextField";
-import Select from "../controlles/Select";
-import { INITIAL_FORM_STATE, FORM_VALIDATION } from "./Validation";
+import { Form as FForm, Formik } from 'formik'
+import { Typography, Grid, Divider } from '@material-ui/core'
+import { useMutation } from '@apollo/client'
+import { ADD_USER, UPDATE_USER } from '../../GraphQL/Mutations'
+import { LOAD_USERS } from '../../GraphQL/Queries'
+import Button from '../controlles/Button'
+import TextField from '../controlles/TextField'
+import Select from '../controlles/Select'
+import { INITIAL_FORM_STATE, FORM_VALIDATION } from './Validation'
 
 function Form({ initialFormState, setIsOpen }) {
   const [addUser, { loading: loadingADD_USER, error: errorADD_USER }] =
     useMutation(ADD_USER, {
       update(cache, { data }) {
         // add a new user to the existing array
-        const newUserFromResponse = data?.addUser;
-        const existingUsers = cache.readQuery({ query: LOAD_USERS });
+        const newUserFromResponse = data?.addUser
+        const existingUsers = cache.readQuery({ query: LOAD_USERS })
         cache.writeQuery({
           query: LOAD_USERS,
           data: {
-            users: [...existingUsers?.users, newUserFromResponse],
-          },
-        });
-      },
-    });
+            users: [...existingUsers?.users, newUserFromResponse]
+          }
+        })
+      }
+    })
 
-  const [updateUser, { loading, error }] = useMutation(UPDATE_USER);
+  const [updateUser, { loading, error }] = useMutation(UPDATE_USER)
 
   const handleSubmit = (value, helpers) => {
     if (initialFormState) {
       updateUser({
         variables: {
           id: initialFormState.id,
-          nom: value.nom,
-          prenom: value.prenom,
-          fonction: value.fonction,
+          updateUserFields: {
+            nom: value.nom,
+            prenom: value.prenom,
+            fonction: value.fonction
+          }
         },
-        refetchQueries: [{ query: LOAD_USERS }],
-      });
+        refetchQueries: [{ query: LOAD_USERS }]
+      })
       if (loadingADD_USER || loading) {
-        return <p>loading...</p>;
+        return <p>loading...</p>
       }
-      setIsOpen(false);
+      setIsOpen(false)
     } else {
       addUser({
         variables: {
-          nom: value.nom,
-          prenom: value.prenom,
-          fonction: value.fonction,
-          /* email: value.email,
-          password: value.password, */
-        },
-      });
+          addUserFields: {
+            nom: value.nom,
+            prenom: value.prenom,
+            fonction: value.fonction
+          }
+        }
+      })
       if (loadingADD_USER || loading) {
-        return <p>loading...</p>;
+        return <p>loading...</p>
       }
-      setIsOpen(false);
+      setIsOpen(false)
     }
-    helpers.resetForm();
-  };
+    helpers.resetForm()
+  }
 
-  if (errorADD_USER || error) return <p>An error occured</p>;
+  if (errorADD_USER || error) return <p>An error occured</p>
 
   return (
     <>
@@ -73,7 +75,7 @@ function Form({ initialFormState, setIsOpen }) {
       </div>
       <Formik
         initialValues={{
-          ...(initialFormState ? initialFormState : INITIAL_FORM_STATE),
+          ...(initialFormState ? initialFormState : INITIAL_FORM_STATE)
         }}
         validationSchema={FORM_VALIDATION}
         onSubmit={handleSubmit}
@@ -92,13 +94,13 @@ function Form({ initialFormState, setIsOpen }) {
                 label="fonction"
                 name="fonction"
                 options={[
-                  { id: "Chef secteur", value: "Chef secteur" },
-                  { id: "Commercial", value: "Commercial" },
-                  { id: "Monteur", value: "Monteur" },
-                  { id: "Agent de conduit", value: "Agent de conduit" },
+                  { id: 'Chef secteur', value: 'Chef secteur' },
+                  { id: 'Commercial', value: 'Commercial' },
+                  { id: 'Monteur', value: 'Monteur' },
+                  { id: 'Agent de conduit', value: 'Agent de conduit' },
                   { id: "Chef d'usine", value: "Chef d'usine" },
-                  { id: "Releveur", value: "Releveur" },
-                  { id: "Comptable", value: "Comptable" },
+                  { id: 'Releveur', value: 'Releveur' },
+                  { id: 'Comptable', value: 'Comptable' }
                 ]}
               />
             </Grid>
@@ -112,14 +114,14 @@ function Form({ initialFormState, setIsOpen }) {
             </Grid> */}
             <Grid item xs={12} sm={12}>
               <Button variant="outlined">
-                {initialFormState ? "Modifier" : "Ajouter"}
+                {initialFormState ? 'Modifier' : 'Ajouter'}
               </Button>
             </Grid>
           </Grid>
         </FForm>
       </Formik>
     </>
-  );
+  )
 }
 
-export default Form;
+export default Form

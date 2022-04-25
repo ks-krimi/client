@@ -1,15 +1,15 @@
-import { IconButton } from "@material-ui/core";
-import { PersonAddDisabled, Delete } from "@material-ui/icons";
-import { useMutation } from "@apollo/client";
-import { RENDRE_LIBRE_MATERIEL } from "../../GraphQL/Mutations";
-import React from "react";
+import { IconButton } from '@material-ui/core'
+import { PersonAddDisabled, Delete } from '@material-ui/icons'
+import { useMutation } from '@apollo/client'
+import { RENDRE_LIBRE_MATERIEL } from '../../GraphQL/Mutations'
+import React from 'react'
 
 function RendreLibre(props) {
   const [updateMateriel, { loading, error }] = useMutation(
     RENDRE_LIBRE_MATERIEL
-  );
+  )
 
-  if (error) return <p>Error occured</p>;
+  if (error) return <p>Error occured</p>
 
   return (
     <React.Fragment>
@@ -21,9 +21,9 @@ function RendreLibre(props) {
           onClick={() =>
             updateMateriel({
               variables: {
-                materielId: props.id,
-                userId: null,
-              },
+                id: props.id,
+                updateMaterielFields: { userId: null }
+              }
             })
           }
         >
@@ -31,7 +31,7 @@ function RendreLibre(props) {
         </IconButton>
       )}
     </React.Fragment>
-  );
+  )
 }
 
-export default RendreLibre;
+export default RendreLibre

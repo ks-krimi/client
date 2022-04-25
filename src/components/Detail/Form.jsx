@@ -1,59 +1,57 @@
-import { Form as FForm, Formik } from "formik";
-import { Typography, Grid, Divider } from "@material-ui/core";
-import { useMutation } from "@apollo/client";
-import { ADD_DETAIL, UPDATE_DETAIL } from "../../GraphQL/Mutations";
-import { LOAD_DETAILS } from "../../GraphQL/Queries";
-import Button from "../controlles/Button";
-import TextField from "../controlles/TextField";
-import { INITIAL_FORM_STATE, FORM_VALIDATION } from "./Validation";
+import { Form as FForm, Formik } from 'formik'
+import { Typography, Grid, Divider } from '@material-ui/core'
+import { useMutation } from '@apollo/client'
+import { ADD_DETAIL, UPDATE_DETAIL } from '../../GraphQL/Mutations'
+import { LOAD_DETAILS } from '../../GraphQL/Queries'
+import Button from '../controlles/Button'
+import TextField from '../controlles/TextField'
+import { INITIAL_FORM_STATE, FORM_VALIDATION } from './Validation'
 
 function Form({ initialFormState, setIsOpen }) {
   const [addDetail, { loading: loadingADD_DETAIL, error: errorADD_DETAIL }] =
     useMutation(ADD_DETAIL, {
       update(cache, { data }) {
-        const newDetailFromResponse = data?.addDetail;
-        const existingDetails = cache.readQuery({ query: LOAD_DETAILS });
+        const newDetailFromResponse = data?.addDetail
+        const existingDetails = cache.readQuery({ query: LOAD_DETAILS })
         cache.writeQuery({
           query: LOAD_DETAILS,
           data: {
-            details: [...existingDetails?.details, newDetailFromResponse],
-          },
-        });
-      },
-    });
+            details: [...existingDetails?.details, newDetailFromResponse]
+          }
+        })
+      }
+    })
 
-  const [updateDetail, { loading, error }] = useMutation(UPDATE_DETAIL);
+  const [updateDetail, { loading, error }] = useMutation(UPDATE_DETAIL)
 
   const handleSubmit = (value, helpers) => {
     if (initialFormState) {
       updateDetail({
         variables: {
           id: initialFormState.id,
-          type: value.type,
-          marque: value.marque,
+          updateMaterielFields: { type: value.type, marque: value.marque }
         },
-        refetchQueries: [{ query: LOAD_DETAILS }],
-      });
+        refetchQueries: [{ query: LOAD_DETAILS }]
+      })
       if (loadingADD_DETAIL || loading) {
-        return <p>loading...</p>;
+        return <p>loading...</p>
       }
-      setIsOpen(false);
+      setIsOpen(false)
     } else {
       addDetail({
         variables: {
-          type: value.type,
-          marque: value.marque,
-        },
-      });
+          addDetailFields: { type: value.type, marque: value.marque }
+        }
+      })
       if (loadingADD_DETAIL || loading) {
-        return <p>loading...</p>;
+        return <p>loading...</p>
       }
-      setIsOpen(false);
+      setIsOpen(false)
     }
-    helpers.resetForm();
-  };
+    helpers.resetForm()
+  }
 
-  if (errorADD_DETAIL || error) return <p>An error occured</p>;
+  if (errorADD_DETAIL || error) return <p>An error occured</p>
 
   return (
     <>
@@ -67,7 +65,7 @@ function Form({ initialFormState, setIsOpen }) {
       </div>
       <Formik
         initialValues={{
-          ...(initialFormState ? initialFormState : INITIAL_FORM_STATE),
+          ...(initialFormState ? initialFormState : INITIAL_FORM_STATE)
         }}
         validationSchema={FORM_VALIDATION}
         onSubmit={handleSubmit}
@@ -82,14 +80,14 @@ function Form({ initialFormState, setIsOpen }) {
             </Grid>
             <Grid item xs={12} sm={12}>
               <Button variant="outlined">
-                {initialFormState ? "Modifier" : "Ajouter"}
+                {initialFormState ? 'Modifier' : 'Ajouter'}
               </Button>
             </Grid>
           </Grid>
         </FForm>
       </Formik>
     </>
-  );
+  )
 }
 
-export default Form;
+export default Form

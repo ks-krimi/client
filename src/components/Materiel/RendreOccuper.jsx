@@ -1,47 +1,47 @@
-import { IconButton, Typography, Grid } from "@material-ui/core";
-import { PersonAdd } from "@material-ui/icons";
-import { useState } from "react";
-import Dialog from "../Dialog";
-import { Form as FForm, Formik } from "formik";
-import Button from "../controlles/Button";
-import Select from "../controlles/Select";
+import { IconButton, Typography, Grid } from '@material-ui/core'
+import { PersonAdd } from '@material-ui/icons'
+import { useState } from 'react'
+import Dialog from '../Dialog'
+import { Form as FForm, Formik } from 'formik'
+import Button from '../controlles/Button'
+import Select from '../controlles/Select'
 import {
   RENDRE_OCCUPER_INITIAL_FORM_STATE,
-  RENDRE_OCCUPER_FORM_VALIDATION,
-} from "./Validation";
-import { RENDRE_OCCUPER_MATERIEL } from "../../GraphQL/Mutations";
-import { useMutation, useQuery } from "@apollo/client";
-import { createOptionsUser } from "../../utils";
-import { LOAD_MATERIELS, LOAD_USERS } from "../../GraphQL/Queries";
+  RENDRE_OCCUPER_FORM_VALIDATION
+} from './Validation'
+import { RENDRE_OCCUPER_MATERIEL } from '../../GraphQL/Mutations'
+import { useMutation, useQuery } from '@apollo/client'
+import { createOptionsUser } from '../../utils'
+import { LOAD_MATERIELS, LOAD_USERS } from '../../GraphQL/Queries'
 
 function RendreOccuper({ materiel }) {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false)
   const handleClick = () => {
-    setIsOpen(true);
-  };
+    setIsOpen(true)
+  }
 
-  const { loading: gettingUser, data: userData } = useQuery(LOAD_USERS);
+  const { loading: gettingUser, data: userData } = useQuery(LOAD_USERS)
 
   const [updateMateriel, { loading, error }] = useMutation(
     RENDRE_OCCUPER_MATERIEL
-  );
+  )
 
   const handleSubmit = (value, helpers) => {
     updateMateriel({
       variables: {
-        materielId: materiel.id,
-        userId: value.userId,
+        id: materiel.id,
+        updateMaterielFields: { userId: value.userId }
       },
-      refetchQueries: [{ query: LOAD_MATERIELS }],
-    });
-    helpers.resetForm();
-    setIsOpen(false);
-  };
+      refetchQueries: [{ query: LOAD_MATERIELS }]
+    })
+    helpers.resetForm()
+    setIsOpen(false)
+  }
 
-  const optionsUser = createOptionsUser(userData?.users);
+  const optionsUser = createOptionsUser(userData?.users)
 
-  if (loading) return <p>loading...</p>;
-  if (error) return <p>An error occured</p>;
+  if (loading) return <p>loading...</p>
+  if (error) return <p>An error occured</p>
 
   return (
     <>
@@ -64,7 +64,7 @@ function RendreOccuper({ materiel }) {
                   name="userId"
                   options={
                     gettingUser
-                      ? [{ id: null, value: "loading..." }]
+                      ? [{ id: null, value: 'loading...' }]
                       : optionsUser
                   }
                   autoFocus
@@ -78,7 +78,7 @@ function RendreOccuper({ materiel }) {
         </Formik>
       </Dialog>
     </>
-  );
+  )
 }
 
-export default RendreOccuper;
+export default RendreOccuper

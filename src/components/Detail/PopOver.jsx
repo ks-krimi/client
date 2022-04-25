@@ -1,65 +1,53 @@
-import { useState } from "react";
-import { MenuItem, IconButton, Menu } from "@material-ui/core";
-import { MoreVert } from "@material-ui/icons";
-import { useMutation } from "@apollo/client";
-import { DELETE_DETAIL } from "../../GraphQL/Mutations";
-import { LOAD_DETAILS } from "../../GraphQL/Queries";
-import Dialog from "../Dialog";
-import Form from "./Form";
-import ListMateriel from "./ListMateriel";
+import { useState } from 'react'
+import { MenuItem, IconButton, Menu } from '@material-ui/core'
+import { MoreVert } from '@material-ui/icons'
+import { useMutation } from '@apollo/client'
+import { DELETE_DETAIL } from '../../GraphQL/Mutations'
+import { LOAD_DETAILS } from '../../GraphQL/Queries'
+import Dialog from '../Dialog'
+import Form from './Form'
+import ListMateriel from './ListMateriel'
 
 function PopOver({ detail }) {
-  const [anchorEl, setAnchorEl] = useState(null);
-  const [isOpen, setIsOpen] = useState(false);
-  const [isOpenListMateriel, setIsOpenListMateriel] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(null)
+  const [isOpen, setIsOpen] = useState(false)
+  const [isOpenListMateriel, setIsOpenListMateriel] = useState(false)
 
   const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
+    setAnchorEl(event.currentTarget)
+  }
 
   const handleClose = () => {
-    setAnchorEl(null);
-  };
+    setAnchorEl(null)
+  }
 
-  const open = Boolean(anchorEl);
+  const open = Boolean(anchorEl)
 
-  const [deleteDetail, { loading, error }] = useMutation(DELETE_DETAIL, {
-    update(cache, { data }) {
-      const deletedDetail = data?.deleteDetail;
-      const existingDetails = cache.readQuery({ query: LOAD_DETAILS });
-      cache.writeQuery({
-        query: LOAD_DETAILS,
-        data: {
-          details: existingDetails?.details.filter(
-            (detail) => detail.id !== deletedDetail.id
-          ),
-        },
-      });
-    },
-  });
+  const [deleteDetail, { loading, error }] = useMutation(DELETE_DETAIL)
 
-  if (error) return <p>Error occured</p>;
+  if (error) return <p>Error occured</p>
 
   const handleDelete = () => {
     deleteDetail({
       variables: {
-        id: detail.id,
+        id: detail.id
       },
-    });
-  };
+      refetchQueries: [{ query: LOAD_DETAILS }]
+    })
+  }
 
   const OpenDialog = () => {
-    setIsOpen(true);
-    handleClose();
-  };
+    setIsOpen(true)
+    handleClose()
+  }
 
   const OpenDialogListeMateriel = () => {
-    setIsOpenListMateriel(true);
-    handleClose();
-  };
+    setIsOpenListMateriel(true)
+    handleClose()
+  }
 
   return (
-    <div style={{ position: "absolute", top: 4, right: 4 }}>
+    <div style={{ position: 'absolute', top: 4, right: 4 }}>
       <IconButton onClick={handleClick}>
         <MoreVert />
       </IconButton>
@@ -69,12 +57,12 @@ function PopOver({ detail }) {
         open={open}
         onClose={handleClose}
         MenuListProps={{
-          "aria-labelledby": "basic-button",
+          'aria-labelledby': 'basic-button'
         }}
       >
         <MenuItem onClick={OpenDialog}>Modifier</MenuItem>
         <MenuItem disabled={detail.materiels[0]} onClick={handleDelete}>
-          {loading ? "loading..." : "Supprimer"}
+          {loading ? 'loading...' : 'Supprimer'}
         </MenuItem>
         <MenuItem
           disabled={!detail.materiels[0]}
@@ -90,7 +78,7 @@ function PopOver({ detail }) {
           initialFormState={{
             id: detail.id,
             type: detail.type,
-            marque: detail.marque,
+            marque: detail.marque
           }}
           setIsOpen={setIsOpen}
         />
@@ -101,7 +89,7 @@ function PopOver({ detail }) {
         <ListMateriel detail={detail} setIsOpen={setIsOpenListMateriel} />
       </Dialog>
     </div>
-  );
+  )
 }
 
-export default PopOver;
+export default PopOver
