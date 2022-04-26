@@ -8,6 +8,7 @@ import TabPanel from '../../components/TabPanel'
 import { useState } from 'react'
 import useAuth from '../../hooks/useAuth'
 import Layout from '../../components/Layout'
+import Backdrop from '../../components/Backdrop'
 
 function Materiel() {
   useTitle('Materiels')
@@ -18,8 +19,6 @@ function Materiel() {
   const handleChange = (event, newValue) => {
     setValue(newValue)
   }
-
-  /*   if (!data) return <p>no data!</p>; */
 
   return (
     <Layout>
@@ -55,7 +54,7 @@ function Materiel() {
             }}
           >
             {loading ? (
-              <p>loading...</p>
+              <Backdrop loading={loading} />
             ) : error ? (
               <p>An error occured</p>
             ) : (
@@ -76,7 +75,7 @@ function Materiel() {
             }}
           >
             {loading ? (
-              <p>loading...</p>
+              <Backdrop loading={loading} />
             ) : error ? (
               <p>An error occured</p>
             ) : (
@@ -96,7 +95,7 @@ function Materiel() {
             }}
           >
             {loading ? (
-              <p>loading...</p>
+              <Backdrop loading={loading} />
             ) : error ? (
               <p>An error occured</p>
             ) : (

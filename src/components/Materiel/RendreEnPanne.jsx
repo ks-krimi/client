@@ -13,6 +13,7 @@ import { UPDATE_MATERIEL } from '../../GraphQL/Mutations'
 import { useMutation, useQuery } from '@apollo/client'
 import { createOptionsTechnicien } from '../../utils'
 import { LOAD_MATERIELS, LOAD_TECHNICIENS } from '../../GraphQL/Queries'
+import Backdrop from '../Backdrop'
 
 function RendreEnPanne({ materiel }) {
   const [isOpen, setIsOpen] = useState(false)
@@ -42,7 +43,7 @@ function RendreEnPanne({ materiel }) {
 
   const optionsTechnicien = createOptionsTechnicien(technicienData?.techniciens)
 
-  if (loading) return <p>loading...</p>
+  if (loading) return <Backdrop loading={loading} />
   if (error) return <p>An error occured</p>
 
   return (

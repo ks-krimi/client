@@ -39,9 +39,7 @@ function Form({ initialFormState, setIsOpen }) {
         },
         refetchQueries: [{ query: LOAD_USERS }]
       })
-      if (loadingADD_USER || loading) {
-        return <p>loading...</p>
-      }
+      if (loading) return <Backdrop loading={loading} />
       setIsOpen(false)
     } else {
       addUser({
@@ -53,9 +51,7 @@ function Form({ initialFormState, setIsOpen }) {
           }
         }
       })
-      if (loadingADD_USER || loading) {
-        return <p>loading...</p>
-      }
+      if (loadingADD_USER) return <Backdrop loading={loadingADD_USER} />
       setIsOpen(false)
     }
     helpers.resetForm()
@@ -104,14 +100,6 @@ function Form({ initialFormState, setIsOpen }) {
                 ]}
               />
             </Grid>
-            {/* <Grid item xs={12}>
-              <TextField
-                required
-                name="password"
-                label="password"
-                type="password"
-              />
-            </Grid> */}
             <Grid item xs={12} sm={12}>
               <Button variant="outlined">
                 {initialFormState ? 'Modifier' : 'Ajouter'}

@@ -6,6 +6,7 @@ import { LOAD_TECHNICIENS } from '../../GraphQL/Queries'
 import Button from '../controlles/Button'
 import TextField from '../controlles/TextField'
 import { INITIAL_FORM_STATE, FORM_VALIDATION } from './Validation'
+import Backdrop from '../Backdrop'
 
 function Form({ initialFormState, setIsOpen }) {
   const [
@@ -28,9 +29,9 @@ function Form({ initialFormState, setIsOpen }) {
         },
         refetchQueries: [{ query: LOAD_TECHNICIENS }]
       })
-      if (loadingADD_TECHNICIEN || loading) {
-        return <p>loading...</p>
-      }
+
+      if (loading) return <Backdrop loading={loading} />
+
       setIsOpen(false)
     } else {
       addTechnicien({
@@ -43,9 +44,8 @@ function Form({ initialFormState, setIsOpen }) {
         },
         refetchQueries: [{ query: LOAD_TECHNICIENS }]
       })
-      if (loadingADD_TECHNICIEN || loading) {
-        return <p>loading...</p>
-      }
+      if (loadingADD_TECHNICIEN)
+        return <Backdrop loading={loadingADD_TECHNICIEN} />
       setIsOpen(false)
     }
     helpers.resetForm()

@@ -18,6 +18,10 @@ function Techniciens() {
     { field: 'contact', headerName: 'Contact', width: 150 }
   ]
 
+  if (loading) return <Backdrop loading={loading} />
+
+  if (error) return <p>An error occured</p>
+
   return (
     <Layout>
       <div
@@ -35,15 +39,9 @@ function Techniciens() {
             flexWrap: 'wrap'
           }}
         >
-          {loading ? (
-            <p>loading...</p>
-          ) : error ? (
-            <p>An error occured</p>
-          ) : (
-            <div style={{ height: 350, width: '100%' }}>
-              <Table columns={columns} rows={rows} />
-            </div>
-          )}
+          <div style={{ height: 350, width: '100%' }}>
+            <Table columns={columns} rows={rows} />
+          </div>
         </div>
       </div>
     </Layout>

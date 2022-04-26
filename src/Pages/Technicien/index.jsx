@@ -5,6 +5,7 @@ import TechnicienList from '../../components/Technicien/TechnicienList'
 import useTitle from '../../hooks/useTitle'
 import useAuth from '../../hooks/useAuth'
 import Layout from '../../components/Layout'
+import Backdrop from '../../components/Backdrop'
 
 function Technicien() {
   useTitle('Techniciens')
@@ -29,7 +30,7 @@ function Technicien() {
           }}
         >
           {loading ? (
-            <p>loading...</p>
+            <Backdrop loading={loading} />
           ) : error ? (
             <p>An error occured</p>
           ) : (

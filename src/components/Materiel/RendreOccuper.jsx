@@ -13,6 +13,7 @@ import { RENDRE_OCCUPER_MATERIEL } from '../../GraphQL/Mutations'
 import { useMutation, useQuery } from '@apollo/client'
 import { createOptionsUser } from '../../utils'
 import { LOAD_MATERIELS, LOAD_USERS } from '../../GraphQL/Queries'
+import Backdrop from '../Backdrop'
 
 function RendreOccuper({ materiel }) {
   const [isOpen, setIsOpen] = useState(false)
@@ -40,7 +41,7 @@ function RendreOccuper({ materiel }) {
 
   const optionsUser = createOptionsUser(userData?.users)
 
-  if (loading) return <p>loading...</p>
+  if (loading) return <Backdrop loading={loading} />
   if (error) return <p>An error occured</p>
 
   return (

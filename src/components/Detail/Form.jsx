@@ -6,6 +6,7 @@ import { LOAD_DETAILS } from '../../GraphQL/Queries'
 import Button from '../controlles/Button'
 import TextField from '../controlles/TextField'
 import { INITIAL_FORM_STATE, FORM_VALIDATION } from './Validation'
+import Backdrop from '../Backdrop'
 
 function Form({ initialFormState, setIsOpen }) {
   const [addDetail, { loading: loadingADD_DETAIL, error: errorADD_DETAIL }] =
@@ -33,9 +34,8 @@ function Form({ initialFormState, setIsOpen }) {
         },
         refetchQueries: [{ query: LOAD_DETAILS }]
       })
-      if (loadingADD_DETAIL || loading) {
-        return <p>loading...</p>
-      }
+      if (loading) return <Backdrop loading={loading} />
+
       setIsOpen(false)
     } else {
       addDetail({
@@ -43,9 +43,8 @@ function Form({ initialFormState, setIsOpen }) {
           addDetailFields: { type: value.type, marque: value.marque }
         }
       })
-      if (loadingADD_DETAIL || loading) {
-        return <p>loading...</p>
-      }
+      if (loadingADD_DETAIL) return <Backdrop loading={loadingADD_DETAIL} />
+
       setIsOpen(false)
     }
     helpers.resetForm()

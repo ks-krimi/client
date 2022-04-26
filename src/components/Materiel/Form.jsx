@@ -9,6 +9,7 @@ import { createOptionsDetailMateriel } from '../../utils'
 import { LOAD_DETAILS, LOAD_MATERIELS } from '../../GraphQL/Queries'
 import { ADD_MATERIEL } from '../../GraphQL/Mutations'
 import { useQuery, useMutation } from '@apollo/client'
+import Backdrop from '../Backdrop'
 
 function Form() {
   const { loading, data } = useQuery(LOAD_DETAILS)
@@ -49,7 +50,7 @@ function Form() {
 
   const optionsMateriel = createOptionsDetailMateriel(data?.details)
 
-  if (loadingMateriel) return <p>loading...</p>
+  if (loadingMateriel) return <Backdrop loading={loading} />
   if (error) return <p>An error occured</p>
 
   return (

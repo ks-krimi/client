@@ -1,35 +1,36 @@
-import { useQuery } from "@apollo/client";
-import { LOAD_USERS } from "../../GraphQL/Queries";
-import Add from "../../components/User/Add";
-import UserList from "../../components/User/UserList";
-import useTitle from "../../hooks/useTitle";
-import useAuth from "../../hooks/useAuth";
-import Layout from "../../components/Layout";
+import { useQuery } from '@apollo/client'
+import { LOAD_USERS } from '../../GraphQL/Queries'
+import Add from '../../components/User/Add'
+import UserList from '../../components/User/UserList'
+import useTitle from '../../hooks/useTitle'
+import useAuth from '../../hooks/useAuth'
+import Layout from '../../components/Layout'
+import Backdrop from '../../components/Backdrop'
 
 function User() {
-  useTitle("Utilisateurs");
-  useAuth();
-  const { error, loading, data } = useQuery(LOAD_USERS);
+  useTitle('Utilisateurs')
+  useAuth()
+  const { error, loading, data } = useQuery(LOAD_USERS)
 
   return (
     <Layout>
       <div
         style={{
           paddingTop: 24,
-          position: "relative",
-          height: "inherit",
+          position: 'relative',
+          height: 'inherit'
         }}
       >
         <div
           style={{
-            display: "flex",
+            display: 'flex',
             gap: 8,
-            padding: "24px 0",
-            flexWrap: "wrap",
+            padding: '24px 0',
+            flexWrap: 'wrap'
           }}
         >
           {loading ? (
-            <p>loading...</p>
+            <Backdrop loading={loading} />
           ) : error ? (
             <p>An error occured</p>
           ) : (
@@ -39,7 +40,7 @@ function User() {
         </div>
       </div>
     </Layout>
-  );
+  )
 }
 
-export default User;
+export default User

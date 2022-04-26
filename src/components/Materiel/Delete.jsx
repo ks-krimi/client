@@ -3,6 +3,7 @@ import { IconButton } from '@material-ui/core'
 import { Delete as MDelete } from '@material-ui/icons'
 import { DELETE_MATERIEL } from '../../GraphQL/Mutations'
 import { LOAD_MATERIELS } from '../../GraphQL/Queries'
+import Backdrop from '../Backdrop'
 
 function Delete(props) {
   const [deleteMateriel, { loading, error }] = useMutation(DELETE_MATERIEL, {
@@ -21,26 +22,21 @@ function Delete(props) {
     }
   })
 
+  if (loading) return <Backdrop loading={loading} />
   if (error) return <p>Error occured</p>
 
   return (
-    <>
-      {loading ? (
-        'loading...'
-      ) : (
-        <IconButton
-          onClick={() =>
-            deleteMateriel({
-              variables: {
-                id: props.id
-              }
-            })
+    <IconButton
+      onClick={() =>
+        deleteMateriel({
+          variables: {
+            id: props.id
           }
-        >
-          <MDelete />
-        </IconButton>
-      )}
-    </>
+        })
+      }
+    >
+      <MDelete />
+    </IconButton>
   )
 }
 
