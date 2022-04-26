@@ -161,3 +161,52 @@ export const UPDATE_DETAIL = gql`
     }
   }
 `
+
+export const ADD_TECHNICIEN = gql`
+  mutation addTechnicien($addTechnicienFields: AddTechnicienInput!) {
+    addTechnicien(addTechnicienFields: $addTechnicienFields) {
+      id
+      nom
+      prenom
+      contact
+      maintenances {
+        id
+        serie
+        status
+        detail {
+          id
+          type
+          marque
+        }
+      }
+    }
+  }
+`
+export const DELETE_TECHNICIEN = gql`
+  mutation deleteTechnicien($id: ID!) {
+    deleteTechnicien(id: $id)
+  }
+`
+export const UPDATE_TECHNICIEN = gql`
+  mutation updateTechnicien(
+    $id: ID!
+    $updateTechnicienFields: UpdateTechnicienInput!
+  ) {
+    updateTechnicien(id: $id, updateTechnicienFields: $updateTechnicienFields) {
+      id
+      nom
+      prenom
+      contact
+      maintenances {
+        id
+        serie
+        status
+        detail {
+          id
+          type
+          marque
+        }
+      }
+    }
+  }
+`

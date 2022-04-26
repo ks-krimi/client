@@ -1,4 +1,4 @@
-import { gql } from "@apollo/client";
+import { gql } from '@apollo/client'
 
 export const LOAD_USERS = gql`
   {
@@ -21,7 +21,7 @@ export const LOAD_USERS = gql`
       }
     }
   }
-`;
+`
 
 export const LOAD_MATERIELS = gql`
   {
@@ -39,7 +39,7 @@ export const LOAD_MATERIELS = gql`
       }
     }
   }
-`;
+`
 
 export const LOAD_DETAILS = gql`
   {
@@ -63,4 +63,24 @@ export const LOAD_DETAILS = gql`
       }
     }
   }
-`;
+`
+
+export const LOAD_TECHNICIENS = gql`
+  {
+    techniciens {
+      id
+      nom
+      prenom
+      contact
+      maintenances {
+        id
+        serie
+        detail {
+          id
+          type
+          marque
+        }
+      }
+    }
+  }
+`
