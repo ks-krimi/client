@@ -75,6 +75,27 @@ export const DELETE_MATERIEL = gql`
   }
 `
 
+export const UPDATE_MATERIEL = gql`
+  mutation updateMateriel(
+    $id: ID!
+    $updateMaterielFields: UpdateMaterielInput!
+  ) {
+    updateMateriel(id: $id, updateMaterielFields: $updateMaterielFields) {
+      id
+      serie
+      detail {
+        type
+        marque
+      }
+      user {
+        nom
+        prenom
+        fonction
+      }
+    }
+  }
+`
+
 export const RENDRE_LIBRE_MATERIEL = gql`
   mutation updateMateriel(
     $id: ID!

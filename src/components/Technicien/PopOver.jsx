@@ -6,7 +6,7 @@ import { DELETE_TECHNICIEN } from '../../GraphQL/Mutations'
 import { LOAD_TECHNICIENS } from '../../GraphQL/Queries'
 import Dialog from '../Dialog'
 import Form from './Form'
-/* import ListMateriel from './ListMateriel' */
+import ListMateriel from './ListMateriel'
 
 function PopOver({ technicien }) {
   const [anchorEl, setAnchorEl] = useState(null)
@@ -87,7 +87,7 @@ function PopOver({ technicien }) {
         </MenuItem>
       </Menu>
 
-      {/* dialog pour le modification d'un utilisateur */}
+      {/* dialog pour le modification d'un technicien */}
       <Dialog isOpen={isOpen} setIsOpen={setIsOpen}>
         <Form
           initialFormState={{
@@ -100,9 +100,12 @@ function PopOver({ technicien }) {
         />
       </Dialog>
 
-      {/* dialog pour les listes des materiel utiliser par un utilisateur */}
+      {/* dialog pour les listes des materiel maintener par un technicien */}
       <Dialog isOpen={isOpenListMateriel} setIsOpen={setIsOpenListMateriel}>
-        {/* <ListMateriel user={user} setIsOpen={setIsOpenListMateriel} /> */}
+        <ListMateriel
+          technicien={technicien}
+          setIsOpen={setIsOpenListMateriel}
+        />
       </Dialog>
     </div>
   )

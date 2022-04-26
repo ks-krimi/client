@@ -28,6 +28,7 @@ export const LOAD_MATERIELS = gql`
     materiels {
       id
       serie
+      status
       detail {
         type
         marque
@@ -36,6 +37,12 @@ export const LOAD_MATERIELS = gql`
         id
         nom
         prenom
+      }
+      technicien {
+        id
+        nom
+        prenom
+        contact
       }
     }
   }
