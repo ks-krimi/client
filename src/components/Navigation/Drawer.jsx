@@ -68,9 +68,9 @@ function Drawer({ open, setOpen }) {
           <Collapse in={isOpen} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
               {[
-                { name: 'Listes des materiels', path: 'list/materiel' },
-                { name: 'Listes des utilisateurs', path: 'list/user' },
-                { name: 'Listes des techniciens', path: 'list/technicien' }
+                { name: 'Listes des materiels', path: 'listmateriel' },
+                { name: 'Listes des utilisateurs', path: 'listuser' },
+                { name: 'Listes des techniciens', path: 'listtechnicien' }
               ].map((array, index) => (
                 <ListItem
                   button
