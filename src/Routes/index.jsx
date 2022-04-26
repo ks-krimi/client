@@ -13,7 +13,8 @@ import {
   Technicien,
   Auth,
   UsersList,
-  MaterielsList
+  MaterielsList,
+  Techniciens
 } from '../Pages'
 
 function Routes() {
@@ -26,6 +27,7 @@ function Routes() {
         <Route path="/technicien" component={Technicien} />
         <Route path="/listuser" component={UsersList} />
         <Route path="/listmateriel" component={MaterielsList} />
+        <Route path="/listtechnicien" component={Techniciens} />
         <Route path="/auth" component={Auth} />
         <Route path="/oops" component={PageNotFound} />
         <Redirect to="/oops" />
