@@ -3,13 +3,11 @@ import { LOAD_TECHNICIENS } from '../../GraphQL/Queries'
 import Add from '../../components/Technicien/Add'
 import TechnicienList from '../../components/Technicien/TechnicienList'
 import useTitle from '../../hooks/useTitle'
-/* import useAuth from '../../hooks/useAuth' */
 import Layout from '../../components/Layout'
 import Backdrop from '../../components/Backdrop'
 
 function Technicien() {
   useTitle('Techniciens')
-  /* useAuth() */
   const { error, loading, data } = useQuery(LOAD_TECHNICIENS)
 
   return (

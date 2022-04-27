@@ -6,13 +6,11 @@ import MaterielList from '../../components/Materiel/MaterielList'
 import { Tab, Tabs } from '@material-ui/core'
 import TabPanel from '../../components/TabPanel'
 import { useState } from 'react'
-/* import useAuth from '../../hooks/useAuth' */
 import Layout from '../../components/Layout'
 import Backdrop from '../../components/Backdrop'
 
 function Materiel() {
   useTitle('Materiels')
-  /* useAuth() */
   const { error, loading, data } = useQuery(LOAD_MATERIELS)
   const [value, setValue] = useState(0)
 

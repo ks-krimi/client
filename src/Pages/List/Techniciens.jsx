@@ -2,14 +2,12 @@ import React from 'react'
 import { useQuery } from '@apollo/client'
 import { LOAD_TECHNICIENS } from '../../GraphQL/Queries'
 import useTitle from '../../hooks/useTitle'
-/* import useAuth from '../../hooks/useAuth' */
 import Layout from '../../components/Layout'
 import Table from '../../components/Table'
 import Backdrop from '../../components/Backdrop'
 
 function Techniciens() {
   useTitle('Listes des techniciens')
-  /* useAuth() */
   const { error, loading, data } = useQuery(LOAD_TECHNICIENS)
 
   const rows = data?.techniciens
