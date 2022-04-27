@@ -30,7 +30,9 @@ function Materiel() {
         <Tabs
           value={value}
           onChange={handleChange}
-          aria-label="basic tabs example"
+          variant="scrollable"
+          scrollButtons="auto"
+          aria-label="materiels tabs"
           style={{
             position: 'sticky',
             top: 12,
