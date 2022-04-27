@@ -15,11 +15,17 @@ import { Visibility, VisibilityOff } from '@material-ui/icons'
 import { useHistory } from 'react-router-dom'
 import { getToken } from '../../utils/auth'
 
-export default function Login({ setIsLoggin }) {
+export default function Register({ setIsLoggin }) {
   const [emailErr, setEmailErr] = useState(false)
   const [passwordErr, setPasswordErr] = useState(false)
   const [emailHelper, setEmailHelper] = useState('')
   const [passwordHelper, setPasswordHelper] = useState('')
+
+  const [nomErr, setNomErr] = useState(false)
+  const [prenomdErr, setPrenomErr] = useState(false)
+  const [nomHelper, setNomHelper] = useState('')
+  const [prenomdHelper, setPrenomHelper] = useState('')
+
   const [showPassword, setShowPassword] = useState(false)
   const classes = useStyles()
   const history = useHistory()
@@ -33,28 +39,39 @@ export default function Login({ setIsLoggin }) {
   }
 
   // formik validation
-  const INITIAL_FORM_STATE = { email: '', password: '' }
+  const INITIAL_FORM_STATE = {
+    email: '',
+    password: '',
+    nom: '',
+    prenom: ''
+  }
   const FORM_VALIDATION = Yup.object().shape({
     email: Yup.string()
       .email('Email invalide')
       .required('Veuiller saisir votre email'),
-    password: Yup.string().required('Veuiller saisir votre mot de passe')
+    password: Yup.string().required('Veuiller saisir votre mot de passe'),
+    nom: Yup.string()
+      .min(2, 'Aux moin 2 caractères')
+      .required('Veuiller saisir votre nom'),
+    prenom: Yup.string()
+      .min(2, 'Aux moin 2 caractères')
+      .required('Veuiller saisir votre prenom')
   })
 
   const sleep = (time) => new Promise((acc) => setTimeout(acc, time))
 
   const handleSubmit = async (values) => {
     await sleep(3000)
-    const { email, password } = values
+    const { email, password, nom, prenom } = values
     axios({
       method: 'POST',
-      url: `${process.env.REACT_APP_API_URL}api/user/login`,
-      data: { email, password },
+      url: `${process.env.REACT_APP_API_URL}api/user/register`,
+      data: { email, password, nom, prenom, level: 1 },
       withCredentials: true
     })
       .then(async (res) => {
         if (res.data.errors) {
-          const { email, password } = res.data.errors
+          const { email, password, nom, prenom } = res.data.errors
           if (email) {
             setEmailErr(true)
             setEmailHelper(email)
@@ -62,6 +79,14 @@ export default function Login({ setIsLoggin }) {
           if (password) {
             setPasswordErr(true)
             setPasswordHelper(password)
+          }
+          if (nom) {
+            setNomErr(true)
+            setNomHelper(nom)
+          }
+          if (prenom) {
+            setPrenomErr(true)
+            setPrenomHelper(prenom)
           }
         } else {
           await getToken()
@@ -80,7 +105,7 @@ export default function Login({ setIsLoggin }) {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Se connecter
+          S'inscrire
         </Typography>
         <Formik
           initialValues={{ ...INITIAL_FORM_STATE }}
@@ -91,9 +116,25 @@ export default function Login({ setIsLoggin }) {
             <TextField
               margin="normal"
               required
+              label="Votre nom"
+              name="nom"
+              autoFocus
+              error={nomErr}
+              helperText={nomHelper}
+            />
+            <TextField
+              margin="normal"
+              required
+              label="Votre prenom"
+              name="prenom"
+              error={prenomdErr}
+              helperText={prenomdHelper}
+            />
+            <TextField
+              margin="normal"
+              required
               label="Votre email"
               name="email"
-              autoFocus
               error={emailErr}
               helperText={emailHelper}
             />
@@ -120,8 +161,8 @@ export default function Login({ setIsLoggin }) {
               helperText={passwordHelper}
             />
 
-            <Link onClick={() => setIsLoggin(false)} color="textPrimary">
-              Je n'ai pas un compte. Créer un compte?
+            <Link onClick={() => setIsLoggin(true)} color="textPrimary">
+              Je ai déjà un compte. Se connecter?
             </Link>
 
             <Button
@@ -131,7 +172,7 @@ export default function Login({ setIsLoggin }) {
               color="primary"
               className={classes.submit}
             >
-              Se connecter
+              S'inscrire
             </Button>
           </Form>
         </Formik>

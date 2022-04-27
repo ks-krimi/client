@@ -1,8 +1,8 @@
-import Login from '../../components/Auth/Login'
-/* import useAuth from "../../hooks/useAuth"; */
+import { useState } from 'react'
+import Authentification from '../../components/Auth'
 
 function Auth() {
-  /* useAuth(); */
+  const [isLoggin, setIsLoggin] = useState(true)
   return (
     <div
       style={{
@@ -13,7 +13,7 @@ function Auth() {
         height: '100vh'
       }}
     >
-      <Login />
+      <Authentification isLoggin={isLoggin} setIsLoggin={setIsLoggin} />
     </div>
   )
 }

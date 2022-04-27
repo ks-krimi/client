@@ -2,7 +2,6 @@ import { IconButton, Tooltip } from '@material-ui/core'
 import { ExitToApp } from '@material-ui/icons'
 import axios from 'axios'
 import Cookies from 'js-cookie'
-import { useHistory } from 'react-router-dom'
 import { IS_LOGGED_IN } from '../../utils/auth'
 
 const removeCookie = (key) => {
@@ -12,8 +11,6 @@ const removeCookie = (key) => {
 }
 
 function Logout() {
-  const history = useHistory()
-
   const logout = async () => {
     await axios({
       method: 'GET',
@@ -29,7 +26,7 @@ function Logout() {
       })
       .catch((err) => console.log(err))
       .finally(() => {
-        history.push('/')
+        window.location = '/'
       })
   }
 
