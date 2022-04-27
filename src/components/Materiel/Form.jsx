@@ -6,7 +6,7 @@ import TextField from '../controlles/TextField'
 import Select from '../controlles/Select'
 import { INITIAL_FORM_STATE, FORM_VALIDATION } from './Validation'
 import { createOptionsDetailMateriel } from '../../utils'
-import { LOAD_DETAILS, LOAD_MATERIELS } from '../../GraphQL/Queries'
+import { LOAD_DETAILS, LOAD_MATERIELS, LOAD_USERS } from '../../GraphQL/Queries'
 import { ADD_MATERIEL } from '../../GraphQL/Mutations'
 import { useQuery, useMutation } from '@apollo/client'
 import Backdrop from '../Backdrop'
@@ -39,11 +39,7 @@ function Form() {
           detailId: value.detailId
         }
       },
-      refetchQueries: [
-        {
-          query: LOAD_DETAILS
-        }
-      ]
+      refetchQueries: [{ query: LOAD_DETAILS }]
     })
     helpers.resetForm()
   }

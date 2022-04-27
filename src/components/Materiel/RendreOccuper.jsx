@@ -33,7 +33,7 @@ function RendreOccuper({ materiel }) {
         id: materiel.id,
         updateMaterielFields: { userId: value.userId }
       },
-      refetchQueries: [{ query: LOAD_MATERIELS }]
+      refetchQueries: [{ query: LOAD_MATERIELS }, { query: LOAD_USERS }]
     })
     helpers.resetForm()
     setIsOpen(false)

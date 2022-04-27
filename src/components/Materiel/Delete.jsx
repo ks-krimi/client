@@ -2,7 +2,7 @@ import { useMutation } from '@apollo/client'
 import { IconButton } from '@material-ui/core'
 import { Delete as MDelete } from '@material-ui/icons'
 import { DELETE_MATERIEL } from '../../GraphQL/Mutations'
-import { LOAD_MATERIELS } from '../../GraphQL/Queries'
+import { LOAD_DETAILS, LOAD_MATERIELS } from '../../GraphQL/Queries'
 import Backdrop from '../Backdrop'
 
 function Delete(props) {
@@ -31,7 +31,8 @@ function Delete(props) {
         deleteMateriel({
           variables: {
             id: props.id
-          }
+          },
+          refetchQueries: [{ query: LOAD_DETAILS }]
         })
       }
     >

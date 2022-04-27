@@ -3,7 +3,7 @@ import { IconButton } from '@material-ui/core'
 import { Check } from '@material-ui/icons'
 import { useMutation } from '@apollo/client'
 import { RENDRE_LIBRE_MATERIEL } from '../../GraphQL/Mutations'
-import { LOAD_MATERIELS } from '../../GraphQL/Queries'
+import { LOAD_MATERIELS, LOAD_TECHNICIENS } from '../../GraphQL/Queries'
 import Backdrop from '../Backdrop'
 
 function RendreEnMarche({ materiel, ...props }) {
@@ -27,7 +27,10 @@ function RendreEnMarche({ materiel, ...props }) {
               technicienId: null
             }
           },
-          refetchQueries: [{ query: LOAD_MATERIELS }]
+          refetchQueries: [
+            { query: LOAD_MATERIELS },
+            { query: LOAD_TECHNICIENS }
+          ]
         })
       }
     >

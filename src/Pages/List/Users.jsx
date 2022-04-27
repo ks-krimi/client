@@ -5,6 +5,7 @@ import useTitle from '../../hooks/useTitle'
 import useAuth from '../../hooks/useAuth'
 import Layout from '../../components/Layout'
 import Table from '../../components/Table'
+import Backdrop from '../../components/Backdrop'
 
 function Users() {
   useTitle('Listes des utilisateurs')

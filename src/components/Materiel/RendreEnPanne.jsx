@@ -35,7 +35,7 @@ function RendreEnPanne({ materiel }) {
           technicienId: value.technicienId
         }
       },
-      refetchQueries: [{ query: LOAD_MATERIELS }]
+      refetchQueries: [{ query: LOAD_MATERIELS }, { query: LOAD_TECHNICIENS }]
     })
     helpers.resetForm()
     setIsOpen(false)
@@ -44,6 +44,7 @@ function RendreEnPanne({ materiel }) {
   const optionsTechnicien = createOptionsTechnicien(technicienData?.techniciens)
 
   if (loading) return <Backdrop loading={loading} />
+
   if (error) return <p>An error occured</p>
 
   return (
