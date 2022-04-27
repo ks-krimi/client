@@ -1,73 +1,77 @@
-import React, { useState } from "react";
-import Avatar from "@material-ui/core/Avatar";
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-import Typography from "@material-ui/core/Typography";
-import { makeStyles } from "@material-ui/core/styles";
-import Container from "@material-ui/core/Container";
-import { Formik, Form } from "formik";
-import * as Yup from "yup";
-import TextField from "../controlles/TextField";
-import Button from "../controlles/Button";
-import axios from "axios";
-import Snakbar from "../Snackbar";
-import { IconButton, InputAdornment } from "@material-ui/core";
-import { Visibility, VisibilityOff } from "@material-ui/icons";
+import React, { useState } from 'react'
+import Avatar from '@material-ui/core/Avatar'
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
+import Typography from '@material-ui/core/Typography'
+import { makeStyles } from '@material-ui/core/styles'
+import Container from '@material-ui/core/Container'
+import { Formik, Form } from 'formik'
+import * as Yup from 'yup'
+import TextField from '../controlles/TextField'
+import Button from '../controlles/Button'
+import axios from 'axios'
+import Snakbar from '../Snackbar'
+import { IconButton, InputAdornment } from '@material-ui/core'
+import { Visibility, VisibilityOff } from '@material-ui/icons'
+import { useHistory } from 'react-router-dom'
+import { getToken } from '../../utils/auth'
 
 export default function Login({ setSignIn, setSignUp }) {
-  const [emailErr, setEmailErr] = useState(false);
-  const [passwordErr, setPasswordErr] = useState(false);
-  const [emailHelper, setEmailHelper] = useState("");
-  const [passwordHelper, setPasswordHelper] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
-  const classes = useStyles();
+  const [emailErr, setEmailErr] = useState(false)
+  const [passwordErr, setPasswordErr] = useState(false)
+  const [emailHelper, setEmailHelper] = useState('')
+  const [passwordHelper, setPasswordHelper] = useState('')
+  const [showPassword, setShowPassword] = useState(false)
+  const classes = useStyles()
+  const history = useHistory()
 
   const handleClickShowPassword = () => {
-    setShowPassword(!showPassword);
-  };
+    setShowPassword(!showPassword)
+  }
 
   const handleMouseDownPassword = (event) => {
-    event.preventDefault();
-  };
+    event.preventDefault()
+  }
 
   // formik validation
-  const INITIAL_FORM_STATE = { email: "", password: "" };
+  const INITIAL_FORM_STATE = { email: '', password: '' }
   const FORM_VALIDATION = Yup.object().shape({
     email: Yup.string()
-      .email("Email invalide")
-      .required("Veuiller saisir votre email"),
-    password: Yup.string().required("Veuiller saisir votre mot de passe"),
-  });
+      .email('Email invalide')
+      .required('Veuiller saisir votre email'),
+    password: Yup.string().required('Veuiller saisir votre mot de passe')
+  })
 
-  const sleep = (time) => new Promise((acc) => setTimeout(acc, time));
+  const sleep = (time) => new Promise((acc) => setTimeout(acc, time))
 
   const handleSubmit = async (values) => {
-    await sleep(3000);
-    const { email, password } = values;
+    await sleep(3000)
+    const { email, password } = values
     axios({
-      method: "POST",
+      method: 'POST',
       url: `${process.env.REACT_APP_API_URL}api/user/login`,
       data: { email, password },
-      withCredentials: true,
+      withCredentials: true
     })
-      .then((res) => {
+      .then(async (res) => {
         if (res.data.errors) {
-          const { email, password } = res.data.errors;
+          const { email, password } = res.data.errors
           if (email) {
-            setEmailErr(true);
-            setEmailHelper(email);
+            setEmailErr(true)
+            setEmailHelper(email)
           }
           if (password) {
-            setPasswordErr(true);
-            setPasswordHelper(password);
+            setPasswordErr(true)
+            setPasswordHelper(password)
           }
         } else {
-          window.location = "/";
+          await getToken()
+          history.push('/')
         }
       })
       .catch((err) => {
-        console.log(err);
-      });
-  };
+        console.log(err)
+      })
+  }
 
   return (
     <Container component="main" maxWidth="xs">
@@ -105,13 +109,13 @@ export default function Login({ setSignIn, setSignUp }) {
                       {showPassword ? <Visibility /> : <VisibilityOff />}
                     </IconButton>
                   </InputAdornment>
-                ),
+                )
               }}
               margin="normal"
               required
               name="password"
               label="Votre mot de passe"
-              type={showPassword ? "text" : "password"}
+              type={showPassword ? 'text' : 'password'}
               error={passwordErr}
               helperText={passwordHelper}
             />
@@ -145,24 +149,24 @@ export default function Login({ setSignIn, setSignUp }) {
         alertMessage={passwordHelper}
       />
     </Container>
-  );
+  )
 }
 
 const useStyles = makeStyles((theme) => ({
   paper: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center'
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
+    backgroundColor: theme.palette.secondary.main
   },
   form: {
-    width: "100%", // Fix IE 11 issue.
-    marginTop: theme.spacing(1),
+    width: '100%', // Fix IE 11 issue.
+    marginTop: theme.spacing(1)
   },
   submit: {
-    margin: theme.spacing(3, 0, 2),
-  },
-}));
+    margin: theme.spacing(3, 0, 2)
+  }
+}))

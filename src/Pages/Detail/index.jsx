@@ -4,13 +4,13 @@ import Add from '../../components/Detail/Add'
 import ListDetail from '../../components/Detail/ListDetail'
 import { LOAD_DETAILS } from '../../GraphQL/Queries'
 import useTitle from '../../hooks/useTitle'
-import useAuth from '../../hooks/useAuth'
+/* import useAuth from '../../hooks/useAuth' */
 import Layout from '../../components/Layout'
 import Backdrop from '../../components/Backdrop'
 
 function Detail() {
   useTitle('Type de materiel')
-  useAuth()
+  /* useAuth() */
   const { error, loading, data } = useQuery(LOAD_DETAILS)
 
   return (

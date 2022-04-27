@@ -6,10 +6,7 @@ import {
   from
 } from '@apollo/client'
 import { onError } from '@apollo/client/link/error'
-import axios from 'axios'
 import Routes from './Routes'
-import userContext from './hooks/UserContext'
-import { useEffect, useState } from 'react'
 import { CssBaseline } from '@material-ui/core'
 
 const httpLink = new HttpLink({
@@ -34,31 +31,10 @@ const client = new ApolloClient({
 })
 
 function App() {
-  const [token, setToken] = useState(null)
-
-  useEffect(() => {
-    const getToken = async () => {
-      await axios({
-        method: 'GET',
-        url: `${process.env.REACT_APP_API_URL}jwtid`,
-        withCredentials: true
-      })
-        .then((res) => {
-          setToken(res.data)
-        })
-        .catch((err) => {
-          setToken(null)
-        })
-    }
-    getToken()
-  }, [token])
-
   return (
     <ApolloProvider client={client}>
-      <userContext.Provider value={token}>
-        <Routes />
-        <CssBaseline />
-      </userContext.Provider>
+      <Routes />
+      <CssBaseline />
     </ApolloProvider>
   )
 }

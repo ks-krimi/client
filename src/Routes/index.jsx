@@ -16,19 +16,20 @@ import {
   MaterielsList,
   Techniciens
 } from '../Pages'
+import { PublicRoute, PrivateRoute } from './protected/ProtectedRoute'
 
 function Routes() {
   return (
     <Router>
       <Switch>
-        <Route path="/" exact component={Materiel} />
-        <Route path="/detail" component={Detail} />
-        <Route path="/user" component={User} />
-        <Route path="/technicien" component={Technicien} />
-        <Route path="/listuser" component={UsersList} />
-        <Route path="/listmateriel" component={MaterielsList} />
-        <Route path="/listtechnicien" component={Techniciens} />
-        <Route path="/auth" component={Auth} />
+        <PrivateRoute path="/" exact component={Materiel} />
+        <PrivateRoute path="/detail" component={Detail} />
+        <PrivateRoute path="/user" component={User} />
+        <PrivateRoute path="/technicien" component={Technicien} />
+        <PrivateRoute path="/listuser" component={UsersList} />
+        <PrivateRoute path="/listmateriel" component={MaterielsList} />
+        <PrivateRoute path="/listtechnicien" component={Techniciens} />
+        <PublicRoute path="/auth" component={Auth} />
         <Route path="/oops" component={PageNotFound} />
         <Redirect to="/oops" />
       </Switch>

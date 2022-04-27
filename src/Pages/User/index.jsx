@@ -3,13 +3,13 @@ import { LOAD_USERS } from '../../GraphQL/Queries'
 import Add from '../../components/User/Add'
 import UserList from '../../components/User/UserList'
 import useTitle from '../../hooks/useTitle'
-import useAuth from '../../hooks/useAuth'
+/* import useAuth from '../../hooks/useAuth' */
 import Layout from '../../components/Layout'
 import Backdrop from '../../components/Backdrop'
 
 function User() {
   useTitle('Utilisateurs')
-  useAuth()
+  /* useAuth() */
   const { error, loading, data } = useQuery(LOAD_USERS)
 
   return (

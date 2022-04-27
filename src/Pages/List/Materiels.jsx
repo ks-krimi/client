@@ -2,14 +2,14 @@ import React from 'react'
 import { useQuery } from '@apollo/client'
 import { LOAD_MATERIELS } from '../../GraphQL/Queries'
 import useTitle from '../../hooks/useTitle'
-import useAuth from '../../hooks/useAuth'
+/* import useAuth from '../../hooks/useAuth' */
 import Layout from '../../components/Layout'
 import Table from '../../components/Table'
 import Backdrop from '../../components/Backdrop'
 
 function Materiels() {
   useTitle('Listes des materiels')
-  useAuth()
+  /* useAuth() */
   const { error, loading, data } = useQuery(LOAD_MATERIELS)
 
   const rows = data?.materiels.map((materiel) => ({

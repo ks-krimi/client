@@ -1,21 +1,21 @@
-import Login from "../../components/Auth/Login";
-import useAuth from "../../hooks/useAuth";
+import Login from '../../components/Auth/Login'
+/* import useAuth from "../../hooks/useAuth"; */
 
 function Auth() {
-  useAuth();
+  /* useAuth(); */
   return (
     <div
       style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        position: "relative",
-        height: "100vh",
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        position: 'relative',
+        height: '100vh'
       }}
     >
       <Login />
     </div>
-  );
+  )
 }
 
-export default Auth;
+export default Auth
